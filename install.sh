@@ -13,8 +13,3 @@ source src/configure_dovecot.sh
 source src/configure_postfix.sh
 source src/configure_ufw.sh
 source src/all_up.sh
-
-chmod +x add_user.sh
-chmod +x add_alias.sh
-chmod +x del_user.sh
-chmod +x del_alias.sh
