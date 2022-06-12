@@ -26,7 +26,7 @@ mkdir -p "$DOMAIN_KEYS" &&
     chmod 440 "$DOMAIN_KEYS_PRIVATE" &&
     echo "$DOMAIN_SELECTOR.$DOMAIN $DOMAIN:mail:$DOMAIN_KEYS_PRIVATE" >>"$DKIM_DATA_KEY_TABLE" &&
     echo "*@$DOMAIN $DOMAIN_SELECTOR.$DOMAIN" >>"$DKIM_DATA_SIGNING_TABLE" &&
-    echo "*@$DOMAIN" >>"$DKIM_DATA_IGNORE_HOSTS" &&
+    echo "*@$DOMAIN" >>"$DKIM_DATA_TRUSTED_HOSTS" &&
     echo "Add below TXT DNS record to your DNS zone under $DOMAIN_SELECTOR:" &&
     echo "$DOMAIN_SELECTOR IN TXT" &&
     cat "$DOMAIN_KEYS_PUBLIC" &&

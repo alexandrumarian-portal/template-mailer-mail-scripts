@@ -26,7 +26,7 @@ Socket			            inet:14291@localhost
 
 KeyTable                    refile:$DKIM_DATA_KEY_TABLE
 SigningTable                refile:$DKIM_DATA_SIGNING_TABLE
-InternalHosts               refile:$DKIM_DATA_IGNORE_HOSTS
+InternalHosts               refile:$DKIM_DATA_TRUSTED_HOSTS
 ExternalIgnoreList          refile:$DKIM_DATA_EXTERNAL_IGNORE_LIST
 
 Mode        	            sv
@@ -48,7 +48,7 @@ cat <<EOF >"$FILE"
 
 EOF
 
-FILE="$DKIM_DATA_IGNORE_HOSTS"
+FILE="$DKIM_DATA_TRUSTED_HOSTS"
 cat <<EOF >"$FILE"
 # example.com
 # *.example.com
