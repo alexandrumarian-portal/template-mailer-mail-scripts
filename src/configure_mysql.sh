@@ -36,8 +36,7 @@ CREATE TABLE IF NOT EXISTS users (
   password varchar(1024) NOT NULL,
   PRIMARY KEY (id),
   UNIQUE KEY (type, domain, email, alias),
-  UNIQUE KEY (email, alias),
-  UNIQUE KEY (alias)
+  UNIQUE KEY (email, alias)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 EOF

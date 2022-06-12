@@ -26,6 +26,15 @@ password = $MYSQL_MAIL_DB_PASS
 query = SELECT DISTINCT email FROM users WHERE type = 'alias' AND alias = '%s'
 
 EOF
+"all@asd.com"
+cat <<EOF >/etc/postfix/mysql-sender-login-maps.cf
+hosts = $MYSQL_MAIL_DB_HOST
+dbname = $MYSQL_MAIL_DB_NAME
+user = $MYSQL_MAIL_DB_USER
+password = $MYSQL_MAIL_DB_PASS
+query = SELECT email FROM users WHERE alias = '%s'
+
+EOF
 
 FILE="/etc/postfix/main.cf"
 backup "$FILE"
@@ -52,6 +61,7 @@ smtpd_sasl_path = run/dovecot/auth
 smtpd_sasl_auth_enable = yes
 smtpd_sasl_security_options = noanonymous, noplaintext
 smtpd_sasl_tls_security_options = noanonymous
+smtpd_sender_login_maps = mysql:/etc/postfix/mysql-sender-login-maps.cf
 
 # Alias
 alias_maps =
@@ -80,34 +90,35 @@ virtual_alias_maps = mysql:/etc/postfix/mysql-virtual-alias-maps.cf
 virtual_mailbox_domains = mysql:/etc/postfix/mysql-virtual-mailbox-domains.cf
 virtual_mailbox_maps = mysql:/etc/postfix/mysql-virtual-mailbox-maps.cf
 
-# Rejects
-smtpd_reject_unlisted_recipient = yes
-
 # Restrictions
+smtpd_reject_unlisted_recipient = yes
+smtpd_reject_unlisted_sender = no
+smtpd_relay_before_recipient_restrictions = yes
+
+smtpd_client_restrictions =
+        permit
 smtpd_helo_restrictions =
-        permit_mynetworks,
         permit_sasl_authenticated,
         reject_invalid_helo_hostname,
-        reject_non_fqdn_helo_hostname
+        reject_non_fqdn_helo_hostname,
+        permit
+smtpd_relay_restrictions =
+        permit_sasl_authenticated,
+        defer_unauth_destination,
+        permit
 smtpd_recipient_restrictions =
-        permit_mynetworks,
         permit_sasl_authenticated,
         reject_non_fqdn_recipient,
         reject_unknown_recipient_domain,
-        reject_unlisted_recipient,
-        reject_unauth_destination
+        reject_unverified_recipient,
+        permit
 smtpd_sender_restrictions =
-        permit_mynetworks,
+        reject_sender_login_mismatch,
         permit_sasl_authenticated,
         reject_non_fqdn_sender,
-        reject_unknown_sender_domain
-smtpd_relay_restrictions =
-        permit_mynetworks,
-        permit_sasl_authenticated,
-        defer_unauth_destination
-smtpd_client_restrictions =
-        permit_sasl_authenticated,
-        reject
+        reject_unknown_sender_domain,
+        reject_unverified_sender,
+        permit
 
 # Milter
 milter_protocol = 2
