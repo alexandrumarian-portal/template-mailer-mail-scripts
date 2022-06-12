@@ -3,7 +3,7 @@
 mkdir -p "$DKIM_DATA"
 mkdir -p "$DKIM_DATA_KEYS"
 
-chgrp -R opendkim "$DKIM_DATA_KEYS"
+chgrp -R $DKIM_GROUP "$DKIM_DATA_KEYS"
 chmod g+s "$DKIM_DATA_KEYS"
 setfacl -PRdm u::rwx,g::rwx,o::- "$DKIM_DATA_KEYS"
 
@@ -62,4 +62,4 @@ cat <<EOF >"$FILE"
 
 EOF
 
-sudo chmod -R 770 /etc/opendkim
+sudo chmod -R 770 "$DKIM_DATA"
