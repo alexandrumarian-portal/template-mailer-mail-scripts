@@ -96,6 +96,10 @@ smtpd_reject_unlisted_sender = no
 smtpd_relay_before_recipient_restrictions = yes
 
 smtpd_client_restrictions =
+        permit_sasl_authenticated,
+        reject_rbl_client b.barracudacentral.org,
+        reject_rbl_client zen.spamhaus.org,
+        reject_rbl_client bl.spamcop.net,
         permit
 smtpd_helo_restrictions =
         permit_sasl_authenticated,
