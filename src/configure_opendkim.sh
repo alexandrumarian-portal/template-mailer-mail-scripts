@@ -1,13 +1,13 @@
 #!/usr/bin/bash
 
-mkdir -p "/etc/opendkim"
-mkdir -p "/etc/opendkim/keys"
+mkdir -p "$DKIM_DATA"
+mkdir -p "$DKIM_DATA_KEYS"
 
-chgrp -R opendkim "/etc/opendkim/keys"
-chmod g+s "/etc/opendkim/keys"
-setfacl -PRdm u::rw,g::rw,o::- "/etc/opendkim/keys"
+chgrp -R opendkim "$DKIM_DATA_KEYS"
+chmod g+s "$DKIM_DATA_KEYS"
+setfacl -PRdm u::rw,g::rw,o::- "$DKIM_DATA_KEYS"
 
-FILE="/etc/opendkim.conf"
+FILE="$DKIM_CONFIG"
 backup "$FILE"
 cat <<EOF >"$FILE"
 AutoRestart                 Yes
@@ -19,15 +19,15 @@ Mode        	            sv
 Canonicalization	        relaxed/simple
 
 UMask			            007
-UserID			            opendkim:opendkim
+UserID			            $DKIM_USER:$DKIM_GROUP
 
-PidFile			            /run/opendkim/opendkim.pid
+PidFile			            $DKIM_USER_HOME/opendkim.pid
 Socket			            inet:14291@localhost
 
-ExternalIgnoreList          refile:/etc/opendkim/ExternalIgnoreList
-InternalHosts               refile:/etc/opendkim/InternalHosts
-KeyTable                    refile:/etc/opendkim/KeyTable
-SigningTable                refile:/etc/opendkim/SigningTable
+KeyTable                    refile:$DKIM_DATA_KEY_TABLE
+SigningTable                refile:$DKIM_DATA_SIGNING_TABLE
+InternalHosts               refile:$DKIM_DATA_IGNORE_HOSTS
+ExternalIgnoreList          refile:$DKIM_DATA_EXTERNAL_IGNORE_LIST
 
 Mode        	            sv
 OversignHeaders		        From
@@ -36,28 +36,28 @@ TrustAnchorFile		        /usr/share/dns/root.key
 
 EOF
 
-FILE="/etc/opendkim/ExternalIgnoreList"
+FILE="$DKIM_DATA_KEY_TABLE"
 cat <<EOF >"$FILE"
-# domain.com
-# *.domain.com
+# mail._domainkey.example.com example.com:mail:$DKIM_DATA_KEYS/example.com/mail.private
 
 EOF
 
-FILE="/etc/opendkim/InternalHosts"
+FILE="$DKIM_DATA_SIGNING_TABLE"
+cat <<EOF >"$FILE"
+# *@example.com mail._domainkey.example.com
+
+EOF
+
+FILE="$DKIM_DATA_IGNORE_HOSTS"
 cat <<EOF >"$FILE"
 # example.com
 # *.example.com
 
 EOF
 
-FILE="/etc/opendkim/KeyTable"
+FILE="$DKIM_DATA_EXTERNAL_IGNORE_LIST"
 cat <<EOF >"$FILE"
-# mail._domainkey.example.com example.com:mail:/etc/opendkim/keys/example.com/mail.private
-
-EOF
-
-FILE="/etc/opendkim/SigningTable"
-cat <<EOF >"$FILE"
-# *@example.com mail._domainkey.example.com
+# domain.com
+# *.domain.com
 
 EOF
