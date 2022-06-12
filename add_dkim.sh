@@ -15,8 +15,10 @@ DOMAIN_KEYS_PUBLIC="$DOMAIN_KEYS/$SELECTOR.txt"
 DOMAIN_KEYS_PRIVATE="$DOMAIN_KEYS/$SELECTOR.private"
 DOMAIN_SELECTOR="$SELECTOR._domainkey"
 
-mkdir "$DOMAIN_KEYS" &&
-    opendkim \
+mkdir -p "$DOMAIN_KEYS" &&
+    [[ ! -f "$DOMAIN_KEYS_PUBLIC" ]] &&
+    [[ ! -f "$DOMAIN_KEYS_PRIVATE" ]] &&
+    opendkim-genkey \
         --directory "$DOMAIN_KEYS" \
         --domain "$DOMAIN" \
         --selector="$SELECTOR" &&
@@ -29,5 +31,5 @@ mkdir "$DOMAIN_KEYS" &&
     systemctl restart opendkim &&
     exit
 
-echo "Failed to configure add DKIM key." &&
+echo "Failed to configure add DKIM key. Failure or may already exist." &&
     exit 1
