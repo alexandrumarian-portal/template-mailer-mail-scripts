@@ -1,11 +1,11 @@
 #!/usr/bin/bash
 
 mkdir -p "$DKIM_DATA"
-mkdir -p "$DKIM_DATA_KEYS"
+setfacl -PRdm u::rwx,g::rwx,o::- "$DKIM_DATA"
 
+mkdir -p "$DKIM_DATA_KEYS"
 chgrp -R $DKIM_GROUP "$DKIM_DATA_KEYS"
 chmod g+s "$DKIM_DATA_KEYS"
-setfacl -PRdm u::rwx,g::rwx,o::- "$DKIM_DATA_KEYS"
 
 FILE="$DKIM_CONFIG"
 backup "$FILE"
