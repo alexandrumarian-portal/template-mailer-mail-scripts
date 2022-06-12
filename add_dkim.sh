@@ -27,7 +27,7 @@ mkdir -p "$DOMAIN_KEYS" &&
     echo "*@$DOMAIN" >>"$DKIM_DATA_IGNORE_HOSTS" &&
     echo "Add below TXT DNS record to your DNS zone under $DOMAIN_SELECTOR:" &&
     echo "$DOMAIN_SELECTOR IN TXT" &&
-    echo "v=DKIM1; k=rsa; p=$(cat "$DOMAIN_KEYS_PUBLIC")" &&
+    cat "$DOMAIN_KEYS_PUBLIC" &&
     systemctl restart opendkim &&
     exit
 
