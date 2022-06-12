@@ -22,8 +22,8 @@ mkdir -p "$DOMAIN_KEYS" &&
         --directory "$DOMAIN_KEYS" \
         --domain "$DOMAIN" \
         --selector="$SELECTOR" &&
-    chmod 440 "$DOMAIN_KEYS_PUBLIC" &&
-    chmod 440 "$DOMAIN_KEYS_PRIVATE" &&
+    chmod 770 "$DOMAIN_KEYS_PUBLIC" &&
+    chmod 770 "$DOMAIN_KEYS_PRIVATE" &&
     echo "$DOMAIN_SELECTOR.$DOMAIN $DOMAIN:mail:$DOMAIN_KEYS_PRIVATE" >>"$DKIM_DATA_KEY_TABLE" &&
     echo "*@$DOMAIN $DOMAIN_SELECTOR.$DOMAIN" >>"$DKIM_DATA_SIGNING_TABLE" &&
     echo "*@$DOMAIN" >>"$DKIM_DATA_TRUSTED_HOSTS" &&

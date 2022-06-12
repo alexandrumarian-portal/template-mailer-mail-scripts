@@ -5,7 +5,7 @@ mkdir -p "$DKIM_DATA_KEYS"
 
 chgrp -R opendkim "$DKIM_DATA_KEYS"
 chmod g+s "$DKIM_DATA_KEYS"
-setfacl -PRdm u::rw,g::rw,o::- "$DKIM_DATA_KEYS"
+setfacl -PRdm u::rwx,g::rwx,o::- "$DKIM_DATA_KEYS"
 
 FILE="$DKIM_CONFIG"
 backup "$FILE"
@@ -61,3 +61,5 @@ cat <<EOF >"$FILE"
 # *.domain.com
 
 EOF
+
+sudo chmod -R 770 /etc/opendkim
