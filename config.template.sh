@@ -15,20 +15,25 @@ MYSQL_MAIL_DB_USER="mailer"
 MYSQL_MAIL_DB_PASS="mailer"
 
 MAIL_USER="maild"
-MAIL_USER_HOME="/home/maild"
 MAIL_GROUP="maild"
+MAIL_USER_HOME="/home/maild"
 
 SPAM_USER="spamd"
-SPAM_USER_HOME="/home/spamd"
 SPAM_GROUP="spamd"
+SPAM_USER_HOME="/home/spamd"
 
 MAIL_DOMAIN="example.com"
 MAIL_DOMAIN_FQ="mail.example.com"
 MAIL_ORIGIN="example.com"
 
+POSTFIX_USER="postfix"
+POSTFIX_GROUP="postfix"
+POSTFIX_HOME="/var/spool/postfix"
+
 DKIM_USER="opendkim"
-DKIM_USER_HOME="/run/opendkim"
 DKIM_GROUP="opendkim"
+DKIM_HOME="/run/opendkim"
+DKIM_RUN="/run/opendkim"
 DKIM_CONFIG="/etc/opendkim.conf"
 DKIM_CONFIG_DATA="/etc/opendkim"
 DKIM_CONFIG_DATA_KEY_TABLE="$DKIM_CONFIG_DATA/KeyTable"
