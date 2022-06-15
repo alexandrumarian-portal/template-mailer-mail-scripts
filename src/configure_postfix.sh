@@ -196,9 +196,11 @@ mailman   unix  -       n       n       -       -       pipe
 
 EOF
 
-mkdir -p "/var/spool/postfix/run"
-mkdir -p "/var/spool/postfix/run/dovecot"
-mkdir -p "/var/spool/postfix/run/spamass"
-setfacl -PRdm u::rwx,g::rwx,o::- "/var/spool/postfix/run"
-chown -R dovecot:postfix "/var/spool/postfix/run/dovecot"
-chown -R spamass-milter:postfix "/var/spool/postfix/run/spamass"
+mkdir -p "$POSTFIX_RUN"
+setfacl -PRdm u::rwx,g::rwx,o::- "$POSTFIX_RUN"
+
+mkdir -p "$POSTFIX_RUN/dovecot"
+chown -R dovecot:postfix "$POSTFIX_RUN/dovecot"
+
+mkdir -p "$POSTFIX_RUN/spamass"
+chown -R spamass-milter:postfix "$POSTFIX_RUN/spamass"
