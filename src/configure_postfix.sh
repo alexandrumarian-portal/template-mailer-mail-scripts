@@ -130,10 +130,10 @@ milter_default_action = accept
 
 smtpd_milters =
         unix:run/spamass/spamass.sock,
-        inet:localhost:14291
+        inet:localhost:$DKIM_SOCKET_PORT
 non_smtpd_milters =
         unix:run/spamass/spamass.sock,
-        inet:localhost:14291
+        inet:localhost:$DKIM_SOCKET_PORT
 
 EOF
 

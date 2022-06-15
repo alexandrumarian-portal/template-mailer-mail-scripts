@@ -22,7 +22,7 @@ UMask			            007
 UserID			            $DKIM_USER:$DKIM_GROUP
 
 PidFile			            $DKIM_RUN/opendkim.pid
-Socket			            inet:14291@localhost
+Socket			            inet:$DKIM_SOCKET_PORT@localhost
 
 KeyTable                    refile:$DKIM_CONFIG_DATA_KEY_TABLE
 SigningTable                refile:$DKIM_CONFIG_DATA_SIGNING_TABLE
