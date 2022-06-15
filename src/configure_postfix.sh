@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 
-cat <<EOF >/etc/postfix/mysql-virtual-mailbox-domains.cf
+FILE="$POSTFIX_CONFIG_DATA_MYSQL_VIRTUAL_MAILBOX_DOMAINS"
+cat <<EOF >"$FILE"
 hosts = $MYSQL_MAIL_DB_HOST
 dbname = $MYSQL_MAIL_DB_NAME
 user = $MYSQL_MAIL_DB_USER
@@ -9,7 +10,8 @@ query = SELECT 1 FROM (SELECT DISTINCT domain FROM users WHERE domain = '%s') AS
 
 EOF
 
-cat <<EOF >/etc/postfix/mysql-virtual-mailbox-maps.cf
+FILE="$POSTFIX_CONFIG_DATA_MYSQL_VIRTUAL_MAILBOX_MAPS"
+cat <<EOF >"$FILE"
 hosts = $MYSQL_MAIL_DB_HOST
 dbname = $MYSQL_MAIL_DB_NAME
 user = $MYSQL_MAIL_DB_USER
@@ -18,7 +20,8 @@ query = SELECT 1 FROM (SELECT DISTINCT email FROM users WHERE type = 'main' AND 
 
 EOF
 
-cat <<EOF >/etc/postfix/mysql-virtual-alias-maps.cf
+FILE="$POSTFIX_CONFIG_DATA_MYSQL_VIRTUAL_ALIAS_MAPS"
+cat <<EOF >"$FILE"
 hosts = $MYSQL_MAIL_DB_HOST
 dbname = $MYSQL_MAIL_DB_NAME
 user = $MYSQL_MAIL_DB_USER
@@ -26,8 +29,9 @@ password = $MYSQL_MAIL_DB_PASS
 query = SELECT DISTINCT email FROM users WHERE type = 'alias' AND alias = '%s'
 
 EOF
-"all@asd.com"
-cat <<EOF >/etc/postfix/mysql-sender-login-maps.cf
+
+FILE="$POSTFIX_CONFIG_DATA_MYSQL_VIRTUAL_LOGIN_MAPS"
+cat <<EOF >"$FILE"
 hosts = $MYSQL_MAIL_DB_HOST
 dbname = $MYSQL_MAIL_DB_NAME
 user = $MYSQL_MAIL_DB_USER
@@ -36,7 +40,7 @@ query = SELECT email FROM users WHERE alias = '%s'
 
 EOF
 
-FILE="/etc/postfix/main.cf"
+FILE="$POSTFIX_CONFIG_MAIN"
 backup "$FILE"
 cat <<EOF >"$FILE"
 # Compatibility
@@ -61,7 +65,7 @@ smtpd_sasl_path = run/dovecot/auth
 smtpd_sasl_auth_enable = yes
 smtpd_sasl_security_options = noanonymous, noplaintext
 smtpd_sasl_tls_security_options = noanonymous
-smtpd_sender_login_maps = mysql:/etc/postfix/mysql-sender-login-maps.cf
+smtpd_sender_login_maps = mysql:$POSTFIX_CONFIG_DATA_MYSQL_VIRTUAL_LOGIN_MAPS
 
 # Alias
 alias_maps =
@@ -86,9 +90,9 @@ inet_protocols = ipv4
 
 # Virtual
 virtual_transport = lmtp:unix:run/dovecot/lmtp
-virtual_alias_maps = mysql:/etc/postfix/mysql-virtual-alias-maps.cf
-virtual_mailbox_domains = mysql:/etc/postfix/mysql-virtual-mailbox-domains.cf
-virtual_mailbox_maps = mysql:/etc/postfix/mysql-virtual-mailbox-maps.cf
+virtual_alias_maps = mysql:$POSTFIX_CONFIG_DATA_MYSQL_VIRTUAL_ALIAS_MAPS
+virtual_mailbox_domains = mysql:$POSTFIX_CONFIG_DATA_MYSQL_VIRTUAL_MAILBOX_DOMAINS
+virtual_mailbox_maps = mysql:$POSTFIX_CONFIG_DATA_MYSQL_VIRTUAL_MAILBOX_MAPS
 
 # Restrictions
 smtpd_reject_unlisted_recipient = yes
@@ -137,7 +141,7 @@ non_smtpd_milters =
 
 EOF
 
-FILE="/etc/postfix/master.cf"
+FILE="$POSTFIX_CONFIG_MASTER"
 backup "$FILE"
 cat <<EOF >"$FILE"
 # ==========================================================================
