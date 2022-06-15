@@ -19,10 +19,10 @@ EOF
 FILE="/etc/default/spamassassin"
 backup "$FILE"
 cat <<EOF >"$FILE"
-OPTIONS="--create-prefs --max-children 2 --username  $SPAM_USER --helper-home-dir $SPAM_USER_HOME -s $SPAM_USER_HOME/log/spamd.log"
+OPTIONS="--create-prefs --max-children 2 --username  $SPAM_USER --helper-home-dir $SPAM_HOME -s $SPAM_HOME/log/spamd.log"
 
 CRON=1
-PIDFILE="$SPAM_USER_HOME/run/spamd.pid"
+PIDFILE="$SPAM_RUN/spamd.pid"
 
 EOF
 

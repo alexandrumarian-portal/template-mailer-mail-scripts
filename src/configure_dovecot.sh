@@ -19,7 +19,7 @@ EOF
 FILE="/etc/dovecot/conf.d/10-mail.conf"
 backup "$FILE"
 cat <<EOF >"$FILE"
-mail_location = maildir:$MAIL_USER_HOME/%d/%n/
+mail_location = maildir:$MAIL_HOME/%d/%n/
 mail_privileged_group = $MAIL_USER
 
 namespace inbox {
@@ -52,7 +52,7 @@ passdb {
 
 userdb {
   driver = static
-  args = uid=$MAIL_USER gid=$MAIL_USER home=$MAIL_USER_HOME/%d/%n
+  args = uid=$MAIL_USER gid=$MAIL_USER home=$MAIL_HOME/%d/%n
 }
 
 EOF
