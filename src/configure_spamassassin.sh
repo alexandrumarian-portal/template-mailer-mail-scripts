@@ -31,8 +31,8 @@ backup "$FILE"
 cat <<EOF >"$FILE"
 OPTIONS="-I -i 127.0.0.1 -r 5 -- -s 10485760"
 
-SOCKET="/var/spool/postfix/run/spamass/spamass.sock"
+SOCKET="$POSTFIX_RUN/spamass/spamass.sock"
 SOCKETMODE="0660"
-SOCKETOWNER="postfix:postfix"
+SOCKETOWNER="$POSTFIX_USER:$POSTFIX_GROUP"
 
 EOF

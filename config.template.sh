@@ -29,6 +29,8 @@ MAIL_ORIGIN="example.com"
 POSTFIX_USER="postfix"
 POSTFIX_GROUP="postfix"
 POSTFIX_HOME="/var/spool/postfix"
+POSTFIX_RUN="/var/spool/postfix/run"
+
 
 DKIM_USER="opendkim"
 DKIM_GROUP="opendkim"
