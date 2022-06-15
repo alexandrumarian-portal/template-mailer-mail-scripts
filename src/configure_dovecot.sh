@@ -88,10 +88,10 @@ service submission-login {
 }
 
 service lmtp {
-  unix_listener /var/spool/postfix/run/dovecot/lmtp {
+  unix_listener $POSTFIX_RUN/dovecot/lmtp {
     mode = 0660
-    user = postfix
-    group = postfix
+    user = $POSTFIX_USER
+    group = $POSTFIX_GROUP
   }
 }
 
@@ -104,10 +104,10 @@ service submission {
 }
 
 service auth {
-  unix_listener /var/spool/postfix/run/dovecot/auth {
+  unix_listener $POSTFIX_RUN/dovecot/auth {
     mode = 0660
-    user = postfix
-    group = postfix
+    user = $POSTFIX_USER
+    group = $POSTFIX_GROUP
   }
 
   unix_listener auth-userdb {
