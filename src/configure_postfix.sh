@@ -134,10 +134,10 @@ milter_default_action = accept
 
 smtpd_milters =
         unix:run/spamass/spamass.sock,
-        inet:localhost:$DKIM_SOCKET_PORT
+        unix:run/opendkim/opendkim.sock
 non_smtpd_milters =
         unix:run/spamass/spamass.sock,
-        inet:localhost:$DKIM_SOCKET_PORT
+        unix:run/opendkim/opendkim.sock
 
 EOF
 
@@ -201,10 +201,16 @@ mailman   unix  -       n       n       -       -       pipe
 EOF
 
 mkdir -p "$POSTFIX_RUN"
-setfacl -PRdm u::rwx,g::rwx,o::- "$POSTFIX_RUN"
+chown -R "$POSTFIX_USER:$POSTFIX_GROUP" "$POSTFIX_RUN"
+chmod g+s "$POSTFIX_RUN"
+
+setfacl -PRdm u::rw,g::rw,o::- "$POSTFIX_RUN"
 
 mkdir -p "$POSTFIX_RUN/dovecot"
-chown -R dovecot:postfix "$POSTFIX_RUN/dovecot"
+chown -R "dovecot:$POSTFIX_GROUP" "$POSTFIX_RUN/dovecot"
 
 mkdir -p "$POSTFIX_RUN/spamass"
-chown -R spamass-milter:postfix "$POSTFIX_RUN/spamass"
+chown -R "spamass-milter:$POSTFIX_GROUP" "$POSTFIX_RUN/spamass"
+
+mkdir -p "$POSTFIX_RUN/opendkim"
+chown -R "$DKIM_USER:$POSTFIX_GROUP" "$POSTFIX_RUN/opendkim"
