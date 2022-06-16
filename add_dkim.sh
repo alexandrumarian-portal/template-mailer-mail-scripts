@@ -27,8 +27,7 @@ mkdir -p "$DOMAIN_KEYS" &&
     echo "$DOMAIN_SELECTOR.$DOMAIN $DOMAIN:mail:$DOMAIN_KEYS_PRIVATE" >>"$DKIM_CONFIG_DATA_KEY_TABLE" &&
     echo "*@$DOMAIN $DOMAIN_SELECTOR.$DOMAIN" >>"$DKIM_CONFIG_DATA_SIGNING_TABLE" &&
     echo "*@$DOMAIN" >>"$DKIM_CONFIG_DATA_TRUSTED_HOSTS" &&
-    echo "Add below TXT DNS record to your DNS zone under $DOMAIN_SELECTOR:" &&
-    echo "$DOMAIN_SELECTOR IN TXT" &&
+    echo "Add below DNS record to your DNS zone under $DOMAIN_SELECTOR:" &&
     cat "$DOMAIN_KEYS_PUBLIC" &&
     systemctl restart opendkim &&
     exit
