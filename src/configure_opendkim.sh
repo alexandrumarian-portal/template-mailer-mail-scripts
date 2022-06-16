@@ -22,7 +22,7 @@ UMask			            660
 UserID			            $DKIM_USER:$DKIM_GROUP
 
 PidFile			            $DKIM_RUN/opendkim.pid
-Socket			            local:/var/spool/postfix/var/run/opendkim/opendkim.sock
+Socket			            local:$POSTFIX_RUN/opendkim/opendkim.sock
 
 KeyTable                    refile:$DKIM_CONFIG_DATA_KEY_TABLE
 SigningTable                refile:$DKIM_CONFIG_DATA_SIGNING_TABLE

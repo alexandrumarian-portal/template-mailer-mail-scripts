@@ -202,9 +202,8 @@ EOF
 
 mkdir -p "$POSTFIX_RUN"
 chown -R "$POSTFIX_USER:$POSTFIX_GROUP" "$POSTFIX_RUN"
-chmod g+s "$POSTFIX_RUN"
-
-setfacl -PRdm u::rw,g::rw,o::- "$POSTFIX_RUN"
+chmod g+s,o+x "$POSTFIX_RUN"
+setfacl -PRdm u::rwx,g::rwx,o::- "$POSTFIX_RUN"
 
 mkdir -p "$POSTFIX_RUN/dovecot"
 chown -R "dovecot:$POSTFIX_GROUP" "$POSTFIX_RUN/dovecot"
