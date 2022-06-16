@@ -39,12 +39,13 @@ EOF
 }
 
 function delete_alias() {
-    local ALIAS="$1"
+    local EMAIL="$1"
+    local ALIAS="$2"
 
     mysql --user="$MYSQL_USER" --password="$MYSQL_PASS" <<EOF
 USE $MYSQL_MAIL_DB_NAME;
 
-DELETE FROM users WHERE type = 'alias' AND alias = '$ALIAS';
+DELETE FROM users WHERE type = 'alias' AND email = '$EMAIL' AND alias = '$ALIAS';
 
 EOF
 }
