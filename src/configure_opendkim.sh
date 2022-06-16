@@ -18,7 +18,7 @@ Mode        	            sv
 
 Canonicalization	        relaxed/simple
 
-UMask			            660
+UMask			            007
 UserID			            $DKIM_USER:$DKIM_GROUP
 
 PidFile			            $DKIM_RUN/opendkim.pid
