@@ -11,8 +11,7 @@ The default configuration:
 - Enforcing TLS on every port.
 - Virtual domains, mailboxes, users and aliases.
 - Firewall allowing only ports 22, 25, 465, 587, 993.
-- Connected with OpenDKIM.
-- Connected with SpamAssassin.
+- Connected with MySQL, Dovecot, OpenDKIM and SpamAssassin.
 - Restrictive relay only on behalf of the authenticated users.
 - Restrictive MAIL FROM policy for addresses that belong to this mail server.
     - Only authenticated users that own MAIL FROM address directly or by an
@@ -152,3 +151,6 @@ To delete a user alias:
 ```shell
 bash del_alias.sh user@domain.com alias@domain.com
 ```
+
+Secure mail server based on automated configuration of Postfix,
+Dovecot, MySQL, OpenDKIM and SpamAssassin.
