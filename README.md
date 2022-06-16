@@ -77,7 +77,7 @@ configuration point at:
 
 ```shell
 sed -i "s/TLS_CERT=.*/TLS_CERT=path-to-cert/g" config.sh
-sed -i "s/TLS_CERT_KEY=.*/TLS_CERT=path-to-cert-key/g" config.sh
+sed -i "s/TLS_CERT_KEY=.*/TLS_CERT_KEY=path-to-cert-key/g" config.sh
 ```
 
 Install the mail server:
