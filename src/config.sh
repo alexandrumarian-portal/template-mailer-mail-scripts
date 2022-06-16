@@ -1,9 +1,7 @@
 #!/usr/bin/bash
 
 if [[ ! -f config.sh ]]; then
-    echo "File 'config.sh' is missing."
-    echo "To use template configuration type 'cp config.template.sh config.sh' and modify 'config.sh' file."
-    echo "Exiting..."
+    echo "Failed to load configuration file, 'config.sh' not found."
     exit 1
 fi
 

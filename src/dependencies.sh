@@ -19,4 +19,8 @@ DEBIAN_FRONTEND=noninteractive apt-get install --yes \
     dovecot-core \
     dovecot-imapd \
     dovecot-lmtpd \
-    dovecot-mysql
+    dovecot-mysql &&
+    return
+
+echo "Failed to install dependencies."
+exit 1
