@@ -151,6 +151,3 @@ To delete a user alias:
 ```shell
 bash del_alias.sh user@domain.com alias@domain.com
 ```
-
-Secure mail server based on automated configuration of Postfix,
-Dovecot, MySQL, OpenDKIM and SpamAssassin.
