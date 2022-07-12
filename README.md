@@ -1,11 +1,11 @@
 ### Description
 
-This repository is set of scripts that allow to spin and partially manage a
-mail server environment in fully automated way.
+Automated mail server configuration based on Postfix, Dovecot, MySQL, OpenDKIM
+and SpamAssassin.
 
 The default configuration:
 
-- IPv4
+- IPv4.
 - SMTP at 25, 465 and 587.
 - IMAP at 993.
 - Enforcing TLS on every port.
